@@ -26,6 +26,9 @@ npm-debug.log
 # Drizzle migration folder (to keep migrations separate)
 drizzle/migrations/
 
+# OpenAPI & TypeSpec
+openapi.json
+openapi.yaml
 
 # Everything else 
 *.dump

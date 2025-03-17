@@ -19,7 +19,8 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.49.1"
+    "@supabase/supabase-js": "^2.49.1",
+    "@typespec/openapi3": "^0.66.0"
   },
   "scripts": {
     "build": "tsc",
