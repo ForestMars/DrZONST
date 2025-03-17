@@ -166,17 +166,6 @@ To start building your API, follow these steps:
 4. **Test the API**: Validate endpoints and test them using your API testing tool (e.g., Postman).
 5. **API Documentation**: The OpenAPI (Swagger) documentation will automatically update based on your API and Zod schemas.
 
-## Contributing
-
-We welcome contributions! To contribute to Dr. ZONST, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-name`).
-3. Make your changes.
-4. Commit your changes (`git commit -am 'Add new feature'`).
-5. Push to the branch (`git push origin feature-name`).
-6. Open a pull request.
-
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
