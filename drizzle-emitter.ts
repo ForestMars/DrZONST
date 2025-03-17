@@ -1,4 +1,6 @@
 // drizzle-emitter.ts
+// This file for generating drizzle table definitions. (Not needed if using Supabase.)
+
 import {
   AssetEmitter,
   TypeEmitter,
@@ -22,7 +24,7 @@ export class DrizzleTypeEmitter extends CodeTypeEmitter {
 
   modelDeclaration(model: Model, name: string): EmitterOutput<string> {
     const tableName = `${model.name.toLowerCase()}s`;
-    
+
     // Generate Drizzle table definition
     const columns = Array.from(model.properties.values())
       .map(prop => {
@@ -35,24 +37,3 @@ export class DrizzleTypeEmitter extends CodeTypeEmitter {
       name,
       `export const ${tableName} = pgTable('${tableName}', {\n${columns}\n});\n`
     );
-  }
-
-  // Handle relationships
-  modelReference(model: Model): EmitterOutput<string> {
-    if (model.name === "Order") {
-      return this.emitter.result.rawCode(`
-        export const orderItems = pgTable('order_items', {
-          orderId: varchar('order_id').references(() => orders.id),
-          albumId: varchar('album_id').references(() => albums.id),
-        });`);
-    }
-    return super.modelReference(model);
-  }
-}
-
-export function $onEmit(context: EmitContext) {
-  const emitter = getAssetEmitter<string>(context.program, DrizzleTypeEmitter);
-  emitter.emitProgram();
-  emitter.writeOutput();
-}
-
