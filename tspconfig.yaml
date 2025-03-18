@@ -1,3 +1,6 @@
 emit:
-  - "@typespec/openapi3"
+  - "@typespec/openapi3"  # Make sure the emitter is listed correctly
 
+options:
+  "@typespec/openapi3":
+    output-file: openapi.yaml  # Specifies the output file
