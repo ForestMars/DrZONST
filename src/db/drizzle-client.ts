@@ -1,3 +1,6 @@
+// drizzle-client.ts
+// Not actively used in Dr ZONST (which uses Supabase instead)
+
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schemas";
