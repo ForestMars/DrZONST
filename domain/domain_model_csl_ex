@@ -1,0 +1,4 @@
+BoundedContext BookshopInventory {
+  Service InventoryService {
+  }
+}
