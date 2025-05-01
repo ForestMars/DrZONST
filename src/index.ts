@@ -1,3 +1,5 @@
+// Supabase users example 
+
 import { db } from "./db/client";
 import { users } from "./db/schemas/users";
 
