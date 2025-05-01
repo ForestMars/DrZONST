@@ -1,0 +1,12 @@
+BoundedContext BookshopInventoryTracking {
+  description: "A web app that helps a bookshop manage its inventory, allowing booksellers to track books, add new ones, and remove discontinued or sold-out books. The main goal is to simplify inventory management for small bookshops."
+
+  ValueObject Book {
+    description: "An item in the shop’s inventory."
+    attributes: {
+    }
+    invariants: {
+    }
+  }
+
+}

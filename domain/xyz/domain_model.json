@@ -1,0 +1,14 @@
+{
+  "entities": [],
+  "operations": [
+    {
+      "name": "View inventory",
+      "description": "Shows all books in the inventory.",
+      "entity": "Book",
+      "type": "list",
+      "inputs": [],
+      "output": "Book[]",
+      "rule": ""
+    }
+  ]
+}

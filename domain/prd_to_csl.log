@@ -1,0 +1,96 @@
+2025-05-01 01:19:57,467 [INFO] Starting PRD to CSL conversion
+2025-05-01 01:19:57,467 [INFO] Parsing PRD file: prd-ex-books2.prd
+2025-05-01 01:19:57,467 [DEBUG] Entering section: overview
+2025-05-01 01:19:57,467 [DEBUG] Entering section: key_terms
+2025-05-01 01:19:57,467 [DEBUG] Entering section: features
+2025-05-01 01:19:57,467 [DEBUG] Entering section: things
+2025-05-01 01:19:57,467 [DEBUG] New thing: Book
+2025-05-01 01:19:57,468 [DEBUG] Subsection in Book: properties
+2025-05-01 01:19:57,468 [DEBUG] New thing: inventoryId
+2025-05-01 01:19:57,468 [DEBUG] New thing: title
+2025-05-01 01:19:57,468 [DEBUG] New thing: author
+2025-05-01 01:19:57,468 [DEBUG] New thing: publicationDate
+2025-05-01 01:19:57,468 [DEBUG] Subsection in publicationDate: rules
+2025-05-01 01:19:57,468 [DEBUG] Subsection in publicationDate: actions
+2025-05-01 01:19:57,468 [DEBUG] New thing: User
+2025-05-01 01:19:57,468 [DEBUG] Subsection in User: properties
+2025-05-01 01:19:57,468 [DEBUG] New thing: userId
+2025-05-01 01:19:57,468 [DEBUG] New thing: name
+2025-05-01 01:19:57,468 [DEBUG] New thing: email
+2025-05-01 01:19:57,468 [DEBUG] New thing: roles
+2025-05-01 01:19:57,468 [DEBUG] Subsection in roles: rules
+2025-05-01 01:19:57,468 [DEBUG] Subsection in roles: actions
+2025-05-01 01:19:57,468 [DEBUG] Entering section: operations
+2025-05-01 01:19:57,468 [DEBUG] New operation: Add a Book
+2025-05-01 01:19:57,469 [DEBUG] New operation: View Inventory
+2025-05-01 01:19:57,469 [DEBUG] New operation: Remove a Book
+2025-05-01 01:19:57,469 [DEBUG] Entering section: connections
+2025-05-01 01:19:57,469 [DEBUG] Entering section: constraints
+2025-05-01 01:19:57,469 [INFO] PRD parsing completed
+2025-05-01 01:19:57,469 [INFO] Inferring DDD elements
+2025-05-01 01:19:57,469 [INFO] DDD inference completed
+2025-05-01 01:19:57,469 [INFO] Generating CSL file: prd-ex-books2_domain_model.csl
+2025-05-01 01:19:57,469 [INFO] CSL file generated successfully: prd-ex-books2_domain_model.csl
+2025-05-01 01:24:11,777 [INFO] Starting PRD to CSL conversion
+2025-05-01 01:24:11,777 [INFO] Parsing PRD file: prd-ex-books2.prd
+2025-05-01 01:24:11,778 [DEBUG] Entering section: overview
+2025-05-01 01:24:11,778 [DEBUG] Entering section: key_terms
+2025-05-01 01:24:11,778 [DEBUG] Entering section: features
+2025-05-01 01:24:11,778 [DEBUG] Entering section: things
+2025-05-01 01:24:11,778 [DEBUG] New thing: Book
+2025-05-01 01:24:11,778 [DEBUG] Subsection in Book: properties
+2025-05-01 01:24:11,778 [DEBUG] Subsection in Book: rules
+2025-05-01 01:24:11,778 [DEBUG] Subsection in Book: actions
+2025-05-01 01:24:11,779 [DEBUG] Subsection in Book: properties
+2025-05-01 01:24:11,779 [DEBUG] Subsection in Book: rules
+2025-05-01 01:24:11,779 [DEBUG] Subsection in Book: actions
+2025-05-01 01:24:11,779 [DEBUG] Entering section: operations
+2025-05-01 01:24:11,779 [DEBUG] New operation: Add a Book
+2025-05-01 01:24:11,779 [DEBUG] New operation: View Inventory
+2025-05-01 01:24:11,779 [DEBUG] New operation: Remove a Book
+2025-05-01 01:24:11,779 [DEBUG] Entering section: connections
+2025-05-01 01:24:11,779 [DEBUG] Entering section: constraints
+2025-05-01 01:24:11,779 [INFO] PRD parsing completed
+2025-05-01 01:24:11,780 [DEBUG] Parsed PRD: {'overview': {'description': 'A web app that helps a bookshop manage its inventory, allowing booksellers to track books, add new ones, and remove discontinued or sold-out books. The main goal is to simplify inventory management for small bookshops.', 'business_area': 'Bookshop inventory tracking.', 'importance': 'Supporting function.'}, 'key_terms': [{'name': 'Book', 'description': 'An item in the shop’s inventory with a unique ID, title, author, and publication date.'}, {'name': 'Inventory ID', 'description': 'A unique code assigned to each book for tracking.'}, {'name': 'User', 'description': 'A person who interacts with the inventory, identified by their name and email.'}, {'name': 'Admin', 'description': 'A role that allows a user to add or remove books from the inventory.'}, {'name': 'Regular User', 'description': 'A role that allows a user to view the inventory.'}, {'name': 'Inventory', 'description': 'The collection of all books in the shop.'}], 'features': [{'name': 'Add a new book', 'description': 'Admins only can add a book with a unique ID, title, author, and publication date; the ID must not already exist.'}, {'name': 'View inventory', 'description': 'All users can see a list of all books in stock with their details.'}, {'name': 'Remove a book', 'description': 'Admins only can remove a book when it’s sold out or discontinued; the book must exist.'}], 'things': [{'name': 'Book', 'description': 'An item in the shop’s inventory.', 'properties': [{'name': 'inventoryId', 'description': 'text, required, unique.'}, {'name': 'title', 'description': 'text, required, cannot be empty.'}, {'name': 'author', 'description': 'text, required, cannot be empty.'}, {'name': 'publicationDate', 'description': 'date, optional.'}, {'name': 'userId', 'description': 'text, required, unique.'}, {'name': 'name', 'description': 'text, required, cannot be empty.'}, {'name': 'email', 'description': 'text, required, must be a valid email, unique.'}, {'name': 'roles', 'description': 'list of roles (e.g., Admin, Regular User), required, at least one role.'}], 'rules': ['Each book must have a unique inventory ID.', 'Title and author cannot be empty.', 'Email must be unique and a valid email format.', 'A user must have at least one role.'], 'actions': [{'name': 'Add book', 'description': 'Needs inventory ID, title, author, publication date; adds the book to inventory.'}, {'name': 'Remove book', 'description': 'Needs inventory ID; removes the book from inventory.'}, {'name': 'Assign role', 'description': 'Needs a role (e.g., Admin, Regular User); adds the role to the user’s roles.'}, {'name': 'Remove role', 'description': 'Needs a role; removes the role, but the user must keep at least one role.'}]}], 'operations': [{'name': 'Add a Book', 'description': 'Adds a new book to the inventory.', 'who': 'Admins only.', 'inputs': [], 'outputs': 'Message confirming the book was added.', 'conditions': [], 'results': 'The book is added to the inventory.', 'notifications': []}, {'name': 'View Inventory', 'description': 'Shows all books in the inventory.', 'who': 'All users (Admins and Regular Users).', 'inputs': [{'name': 'Outputs', 'type': 'List'}, {'name': 'Conditions', 'type': 'None'}, {'name': 'Results', 'type': 'None'}, {'name': 'Notifications', 'type': 'None'}], 'outputs': '', 'conditions': [], 'results': '', 'notifications': []}, {'name': 'Remove a Book', 'description': 'Removes a book from the inventory.', 'who': 'Admins only.', 'inputs': [], 'outputs': 'Message confirming the book was removed.', 'conditions': [], 'results': 'The book is removed from the inventory.', 'notifications': []}], 'connections': [{'name': 'Users to Roles', 'description': 'Each user can have one or more roles (e.g., Admin, Regular User).'}, {'name': 'Users to Books', 'description': 'No direct connection; users interact with books through operations like adding, viewing, or removing.'}], 'constraints': ['The system must support up to 5,000 books.', 'All users must be logged in to perform any action.', 'The inventory list must load in under 2 seconds.']}
+2025-05-01 01:24:11,780 [INFO] Inferring DDD elements
+2025-05-01 01:24:11,780 [INFO] DDD inference completed
+2025-05-01 01:24:11,780 [DEBUG] Inferred DDD: {'bounded_context': 'Bookshopinventorytracking', 'description': 'A web app that helps a bookshop manage its inventory, allowing booksellers to track books, add new ones, and remove discontinued or sold-out books. The main goal is to simplify inventory management for small bookshops.', 'entities': [{'name': 'Book', 'description': 'An item in the shop’s inventory.', 'attributes': [{'name': 'inventoryId', 'type': 'Text', 'constraints': ['required', 'unique.']}, {'name': 'title', 'type': 'Text', 'constraints': ['required', 'cannot be empty.']}, {'name': 'author', 'type': 'Text', 'constraints': ['required', 'cannot be empty.']}, {'name': 'publicationDate', 'type': 'Date', 'constraints': ['optional.']}, {'name': 'userId', 'type': 'Text', 'constraints': ['required', 'unique.']}, {'name': 'name', 'type': 'Text', 'constraints': ['required', 'cannot be empty.']}, {'name': 'email', 'type': 'Text', 'constraints': ['required', 'must be a valid email', 'unique.']}, {'name': 'roles', 'type': 'List of roles (e.g.', 'constraints': ['Admin', 'Regular User)', 'required', 'at least one role.']}], 'invariants': ['Each book must have a unique inventory ID.', 'Title and author cannot be empty.', 'Email must be unique and a valid email format.', 'A user must have at least one role.'], 'behaviors': [{'name': 'Add book', 'description': 'Needs inventory ID, title, author, publication date; adds the book to inventory.'}, {'name': 'Remove book', 'description': 'Needs inventory ID; removes the book from inventory.'}, {'name': 'Assign role', 'description': 'Needs a role (e.g., Admin, Regular User); adds the role to the user’s roles.'}, {'name': 'Remove role', 'description': 'Needs a role; removes the role, but the user must keep at least one role.'}]}], 'value_objects': [{'name': 'Role', 'description': 'Represents a user role.', 'attributes': [{'name': 'name', 'type': 'String'}], 'invariants': ['name must be Admin or Regular User'], 'instances': [{'name': 'Admin', 'description': 'Grants add/remove permissions'}, {'name': 'Regular User', 'description': 'Grants view permissions'}]}], 'aggregates': [{'name': 'Book', 'root': 'Book'}], 'domain_services': [{'name': 'InventoryPermissionPolicy', 'description': 'Manages permissions for inventory operations.', 'behaviors': [{'name': 'canAddABook', 'description': 'Checks if a user can add a book.', 'rule': 'True for ADMINS. role'}, {'name': 'canViewInventory', 'description': 'Checks if a user can view inventory.', 'rule': 'True for Admin or Regular User roles'}, {'name': 'canRemoveABook', 'description': 'Checks if a user can remove a book.', 'rule': 'True for ADMINS. role'}]}], 'domain_events': [], 'repositories': [{'name': 'BookRepository', 'behaviors': ['findById(inventoryId: Text): Book', 'findAll(): List<Book>', 'save(book: Book)', 'delete(book: Book)']}], 'relationships': [{'name': 'Users to Roles', 'description': 'Each user can have one or more roles (e.g., Admin, Regular User).'}, {'name': 'Users to Books', 'description': 'No direct connection; users interact with books through operations like adding, viewing, or removing.'}]}
+2025-05-01 01:24:11,780 [INFO] Generating CSL file: prd-ex-books2_domain_model.csl
+2025-05-01 01:24:11,780 [INFO] CSL file generated successfully: prd-ex-books2_domain_model.csl
+2025-05-01 01:24:49,289 [INFO] Starting PRD to CSL conversion
+2025-05-01 01:24:49,289 [INFO] Parsing PRD file: prd-ex-books2.prd
+2025-05-01 01:24:49,290 [DEBUG] Raw PRD content (first 500 chars):
+# Product Requirements Document: Simple Bookshop Inventory
+
+# Section: Overview
+- Product Description: A web app that helps a bookshop manage its inventory, allowing booksellers to track books, add new ones, and remove discontinued or sold-out books. The main goal is to simplify inventory management for small bookshops.
+- Business Area: Bookshop inventory tracking.
+- Importance: Supporting function.
+
+# Section: Key Terms
+- Book: An item in the shop’s inventory with a unique ID, title, author, an...
+2025-05-01 01:24:49,290 [DEBUG] Normalized PRD content length: 3885 characters
+2025-05-01 01:24:49,290 [INFO] Found 17 sections: ['Product Requirements', 'Overview', 'Key Terms', 'Features', 'Things', 'Properties', 'Rules', 'Actions', 'Properties', 'Rules', 'Actions', 'Operations', 'Add a', 'View Inventory', 'Remove a', 'Connections', 'Constraints']
+2025-05-01 01:24:49,290 [DEBUG] Processing section: product_requirements
+2025-05-01 01:24:49,290 [DEBUG] Processing section: overview
+2025-05-01 01:24:49,291 [DEBUG] Processing section: key_terms
+2025-05-01 01:24:49,291 [DEBUG] Processing section: features
+2025-05-01 01:24:49,291 [DEBUG] Processing section: things
+2025-05-01 01:24:49,291 [DEBUG] Parsing thing: Book
+2025-05-01 01:24:49,291 [DEBUG] Processing section: properties
+2025-05-01 01:24:49,291 [DEBUG] Processing section: rules
+2025-05-01 01:24:49,291 [DEBUG] Processing section: actions
+2025-05-01 01:24:49,291 [DEBUG] Processing section: properties
+2025-05-01 01:24:49,292 [DEBUG] Processing section: rules
+2025-05-01 01:24:49,292 [DEBUG] Processing section: actions
+2025-05-01 01:24:49,292 [DEBUG] Processing section: operations
+2025-05-01 01:24:49,292 [DEBUG] Processing section: add_a
+2025-05-01 01:24:49,292 [DEBUG] Processing section: view_inventory
+2025-05-01 01:24:49,292 [DEBUG] Processing section: remove_a
+2025-05-01 01:24:49,292 [DEBUG] Processing section: connections
+2025-05-01 01:24:49,292 [DEBUG] Processing section: constraints
+2025-05-01 01:24:49,292 [INFO] PRD parsing completed
+2025-05-01 01:24:49,292 [INFO] Inferring DDD elements
+2025-05-01 01:24:49,292 [INFO] DDD inference completed
+2025-05-01 01:24:49,292 [INFO] Generating CSL file: prd-ex-books2_domain_model.csl
+2025-05-01 01:24:49,292 [INFO] CSL file generated successfully: prd-ex-books2_domain_model.csl
