@@ -1,0 +1,101 @@
+BoundedContext Bookshopinventorytracking. {
+  description: "A web app that helps a bookshop manage its inventory, allowing booksellers to track books, add new ones, and remove discontinued or sold-out books. The main goal is to simplify inventory management for small bookshops."
+
+  ValueObject Book {
+    description: "An item in the shop’s inventory."
+    attributes: {
+    }
+    invariants: {
+    }
+  }
+
+  ValueObject inventoryId {
+    description: "text, required, unique."
+    attributes: {
+    }
+    invariants: {
+    }
+  }
+
+  ValueObject title {
+    description: "text, required, cannot be empty."
+    attributes: {
+    }
+    invariants: {
+    }
+  }
+
+  ValueObject author {
+    description: "text, required, cannot be empty."
+    attributes: {
+    }
+    invariants: {
+    }
+  }
+
+  ValueObject publicationDate {
+    description: "date, optional."
+    attributes: {
+    }
+    invariants: {
+      I1: "Each book must have a unique inventory ID."
+    }
+  }
+
+  ValueObject User {
+    description: "A person who interacts with the inventory."
+    attributes: {
+    }
+    invariants: {
+    }
+  }
+
+  ValueObject userId {
+    description: "text, required, unique."
+    attributes: {
+    }
+    invariants: {
+    }
+  }
+
+  ValueObject name {
+    description: "text, required, cannot be empty."
+    attributes: {
+    }
+    invariants: {
+    }
+  }
+
+  ValueObject email {
+    description: "text, required, must be a valid email, unique."
+    attributes: {
+    }
+    invariants: {
+    }
+  }
+
+  ValueObject roles {
+    description: "list of roles (e.g., Admin, Regular User), required, at least one role."
+    attributes: {
+    }
+    invariants: {
+      I1: "Email must be unique and a valid email format."
+    }
+  }
+
+  DomainService InventoryPermissionPolicy {
+    description: "Manages permissions for inventory operations."
+    behaviors: {
+      canAddABook: Boolean
+        description: "Checks if a user can add a book."
+        rule: "True for ADMINS. role"
+      canViewInventory: Boolean
+        description: "Checks if a user can view inventory."
+        rule: "True for ADMIN or REGULAR_USER roles"
+      canRemoveABook: Boolean
+        description: "Checks if a user can remove a book."
+        rule: "True for ADMINS. role"
+    }
+  }
+
+}
