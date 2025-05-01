@@ -1,0 +1,89 @@
+# Product Requirements Document: Simple Bookshop Inventory
+
+# Section: Overview
+- Product Description: A web app that helps a bookshop manage its inventory, allowing booksellers to track books, add new ones, and remove discontinued or sold-out books. The main goal is to simplify inventory management for small bookshops.
+- Business Area: Bookshop inventory tracking.
+- Importance: Supporting function.
+
+# Section: Key Terms
+- Book: An item in the shop’s inventory with a unique ID, title, author, and publication date.
+- Inventory ID: A unique code assigned to each book for tracking.
+- User: A person who interacts with the inventory, identified by their name and email.
+- Admin: A role that allows a user to add or remove books from the inventory.
+- Regular User: A role that allows a user to view the inventory.
+- Inventory: The collection of all books in the shop.
+
+# Section: Features
+- Add a new book: Admins only can add a book with a unique ID, title, author, and publication date; the ID must not already exist.
+- View inventory: All users can see a list of all books in stock with their details.
+- Remove a book: Admins only can remove a book when it’s sold out or discontinued; the book must exist.
+
+# Section: Things
+- Book: An item in the shop’s inventory.
+  ## Properties:
+  - inventoryId: text, required, unique.
+  - title: text, required, cannot be empty.
+  - author: text, required, cannot be empty.
+  - publicationDate: date, optional.
+  ## Rules:
+  - Each book must have a unique inventory ID.
+  - Title and author cannot be empty.
+  ## Actions:
+  - Add book: Needs inventory ID, title, author, publication date; adds the book to inventory.
+  - Remove book: Needs inventory ID; removes the book from inventory.
+- User: A person who interacts with the inventory.
+  ## Properties:
+  - userId: text, required, unique.
+  - name: text, required, cannot be empty.
+  - email: text, required, must be a valid email, unique.
+  - roles: list of roles (e.g., Admin, Regular User), required, at least one role.
+  ## Rules:
+  - Email must be unique and a valid email format.
+  - A user must have at least one role.
+  ## Actions:
+  - Assign role: Needs a role (e.g., Admin, Regular User); adds the role to the user’s roles.
+  - Remove role: Needs a role; removes the role, but the user must keep at least one role.
+
+# Section: Operations
+## Add a Book
+- Describe what the action does: Adds a new book to the inventory.
+- Who Can Do It: Admins only.
+- Inputs:
+  - inventoryId: text
+  - title: text
+  - author: text
+  - publicationDate: date
+- Outputs: Message confirming the book was added.
+- Conditions:
+  - The inventory ID must be unique.
+  - Title and author must not be empty.
+- Results: The book is added to the inventory.
+- Notifications: Send a “book added” alert to the inventory system.
+
+## View Inventory
+- Describe what the action does: Shows all books in the inventory.
+- Who Can Do It: All users (Admins and Regular Users).
+- Inputs: None.
+- Outputs: List of all books with their inventory ID, title, author, and publication date.
+- Conditions: None.
+- Results: None.
+- Notifications: None.
+
+## Remove a Book
+- Describe what the action does: Removes a book from the inventory.
+- Who Can Do It: Admins only.
+- Inputs:
+  - inventoryId: text
+- Outputs: Message confirming the book was removed.
+- Conditions: The book with the given inventory ID must exist.
+- Results: The book is removed from the inventory.
+- Notifications: Send a “book removed” alert to the inventory system.
+
+# Section: Connections
+- Users to Roles: Each user can have one or more roles (e.g., Admin, Regular User).
+- Users to Books: No direct connection; users interact with books through operations like adding, viewing, or removing.
+
+# Section: Constraints
+- The system must support up to 5,000 books.
+- All users must be logged in to perform any action.
+- The inventory list must load in under 2 seconds.

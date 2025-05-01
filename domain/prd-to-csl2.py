@@ -1,4 +1,5 @@
 import re
+import sys
 import os
 
 def parse_prd(file_path):
@@ -121,18 +122,21 @@ def infer_ddd_elements(prd):
                 'description': thing['description'],
                 'attributes': [],
                 'invariants': thing['rules'],
-                'behaviors': [a.split(':')[0].strip() for a in thing['actions']]
+                'behaviors': []
             }
             for prop in thing['properties']:
-                # Parse property description (e.g., "text, required, unique")
                 desc = prop['description'].split(',')
-                type_ = desc[0].strip()
+                type_ = desc[0].strip().capitalize()
                 constraints = [c.strip() for c in desc[1:]] if len(desc) > 1 else []
                 entity['attributes'].append({
                     'name': prop['name'],
-                    'type': type_.capitalize(),
+                    'type': 'List' if 'list of' in prop['description'].lower() else type_,
                     'constraints': constraints
                 })
+            for action in thing['actions']:
+                action_name = action.split(':')[0].strip()
+                action_desc = action.split(':')[1].strip() if ':' in action else f"Performs {action_name.lower()}."
+                entity['behaviors'].append({'name': action_name, 'description': action_desc})
             ddd['entities'].append(entity)
             # Each entity is an aggregate root
             ddd['aggregates'].append({
@@ -140,23 +144,25 @@ def infer_ddd_elements(prd):
                 'root': thing['name']
             })
             # Assume a repository for each entity
-            ddd['repositories'].append({
-                'name': f"{thing['name']}Repository",
-                'behaviors': [
-                    f"findById({prop['name']}: {prop['type'].capitalize()}): {thing['name']}",
-                    f"findAll(): List<{thing['name']}>",
-                    f"save({thing['name'].lower()}: {thing['name']})",
-                    f"delete({thing['name'].lower()}: {thing['name']})"
-                ] for prop in thing['properties'] if 'unique' in prop['description'].lower()
-            })
+            id_prop = next((p for p in thing['properties'] if 'unique' in p['description'].lower()), None)
+            if id_prop:
+                ddd['repositories'].append({
+                    'name': f"{thing['name']}Repository",
+                    'behaviors': [
+                        f"findById({id_prop['name']}: {id_prop['description'].split(',')[0].strip().capitalize()}): {thing['name']}",
+                        f"findAll(): List<{thing['name']}>",
+                        f"save({thing['name'].lower()}: {thing['name']})",
+                        f"delete({thing['name'].lower()}: {thing['name']})"
+                    ]
+                })
         else:
-            # Assume non-ID properties (e.g., roles) are value objects
+            # Non-ID Things (e.g., roles) are value objects
             ddd['value_objects'].append({
                 'name': thing['name'],
                 'description': thing['description'],
                 'attributes': [{'name': p['name'], 'type': p['description'].split(',')[0].strip().capitalize()} for p in thing['properties']],
                 'invariants': thing['rules'],
-                'instances': []  # Infer instances for roles
+                'instances': []
             })
 
     # Infer value objects from properties (e.g., inventoryId, email)
@@ -172,18 +178,25 @@ def infer_ddd_elements(prd):
                     'instances': []
                 })
             elif 'list of roles' in prop['description'].lower():
-                # Handle roles as a value object with instances
                 role_vo = next((vo for vo in ddd['value_objects'] if vo['name'] == 'Role'), None)
-                if role_vo:
-                    role_vo['instances'] = [
-                        {'name': 'ADMIN', 'description': 'Grants add/remove permissions'},
-                        {'name': 'REGULAR_USER', 'description': 'Grants view permissions'}
-                    ]
+                if not role_vo:
+                    role_vo = {
+                        'name': 'Role',
+                        'description': 'Represents a user role.',
+                        'attributes': [{'name': 'name', 'type': 'String'}],
+                        'invariants': ['name must be ADMIN or REGULAR_USER'],
+                        'instances': []
+                    }
+                    ddd['value_objects'].append(role_vo)
+                role_vo['instances'] = [
+                    {'name': 'ADMIN', 'description': 'Grants add/remove permissions'},
+                    {'name': 'REGULAR_USER', 'description': 'Grants view permissions'}
+                ]
 
     # Infer domain events from notifications
     for op in prd['operations']:
         for notif in op['notifications']:
-            event_name = notif.split(' ')[1].capitalize() + notif.split(' ')[2].capitalize()
+            event_name = ''.join(word.capitalize() for word in notif.split(' ')[1:3])  # e.g., "book added" -> BookAdded
             event_attrs = [{'name': i['name'], 'type': i['type'].capitalize()} for i in op['inputs']]
             ddd['domain_events'].append({
                 'name': event_name,
@@ -194,20 +207,13 @@ def infer_ddd_elements(prd):
     # Infer domain service for permissions
     permission_behaviors = []
     for op in prd['operations']:
-        if op['who'].lower() != 'all users':
-            behavior_name = f"can{op['name'].replace(' ', '')}"
-            permission_behaviors.append({
-                'name': behavior_name,
-                'description': f"Checks if a user can {op['name'].lower()}.",
-                'rule': f"True for {op['who'].upper().replace(' ONLY', '')} role"
-            })
-        # Add view permission for all users
-        if 'view' in op['name'].lower():
-            permission_behaviors.append({
-                'name': f"can{op['name'].replace(' ', '')}",
-                'description': f"Checks if a user can {op['name'].lower()}.",
-                'rule': "True for ADMIN or REGULAR_USER roles"
-            })
+        behavior_name = f"can{''.join(word.capitalize() for word in op['name'].split())}"
+        rule = "True for ADMIN or REGULAR_USER roles" if op['who'].lower() == 'all users (admins and regular users)' else f"True for {op['who'].upper().replace(' ONLY', '')} role"
+        permission_behaviors.append({
+            'name': behavior_name,
+            'description': f"Checks if a user can {op['name'].lower()}.",
+            'rule': rule
+        })
     if permission_behaviors:
         ddd['domain_services'].append({
             'name': 'InventoryPermissionPolicy',
@@ -244,7 +250,7 @@ def generate_csl(ddd, output_file):
             f.write("    }\n")
             f.write("    behaviors: {\n")
             for beh in entity['behaviors']:
-                f.write(f"      {beh}: \"Performs {beh.lower()}.\"\n")
+                f.write(f"      {beh['name']}: \"{beh['description']}\"\n")
             f.write("    }\n")
             f.write("  }\n\n")
 
@@ -301,13 +307,21 @@ def generate_csl(ddd, output_file):
 
         f.write("}\n")
 
-def main(prd_file, output_csl):
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python prd_to_csl.py <prd_file>")
+        sys.exit(1)
+
+    prd_file = sys.argv[1]
+    if not os.path.exists(prd_file):
+        print(f"Error: PRD file '{prd_file}' not found.")
+        sys.exit(1)
+
+    output_csl = f"{os.path.splitext(prd_file)[0]}_domain_model.csl"
     prd = parse_prd(prd_file)
     ddd = infer_ddd_elements(prd)
     generate_csl(ddd, output_csl)
     print(f"CSL file generated at: {output_csl}")
 
 if __name__ == "__main__":
-    prd_file = "simple_bookshop_inventory.prd"  # Replace with your PRD file path
-    output_csl = "simple_bookshop_inventory.csl"
-    main(prd_file, output_csl)
+    main()
