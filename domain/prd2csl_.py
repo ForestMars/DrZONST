@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# prd2csl.py - Converts a well-formatted PRD into a CSL domain model.
+# prd2csl_.py - Converts a well-formatted PRD into a CSL domain model. (DELETE)
 # __author__ = 'Forest Mars'
 # __version__ = '0.0.2'
 
