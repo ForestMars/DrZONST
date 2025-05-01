@@ -9,12 +9,11 @@ Features
 - Remove a book when it’s sold out or discontinued.
 
 Entities
-- Book: A book in the shop. It has a title, author, and quantity. The quantity can’t be negative.
+- Book: A book in the shop. It has a title, author, and date, as well as inventory ID. 
+- User: A user who can view books. They have a name and an email. 
+- Admin: A user with the Admin role who can add and delete books. 
 
 Operations
 - Add a book: Lets the user add a new book to the stock.
 - View inventory: Shows all books in the inventory.
 - Remove a book: Takes a book out of the inventory.
-
-Constraints
-- The app must work offline with local storage.
