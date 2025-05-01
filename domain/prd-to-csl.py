@@ -1,4 +1,3 @@
-
 # prd2csl.py - Converts a well-formatted PRD into a CSL domain model.
 # __version__ = '0.0.python3'
 
@@ -10,12 +9,9 @@ import traceback
 import sys
 
 # Set up logging
-print("DEBUG: Initializing logging")
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s", force=True)
 logger = logging.getLogger(__name__)
 logger.debug("Logger initialized")
-print("DEBUG: Logger initialized")
-input("fuck you")
 
 # Type mapping from PRD-inferred types to CSL types
 TYPE_MAPPING = {
@@ -219,14 +215,19 @@ def main():
         type=str,
         help="Path to the input PRD text file (e.g., 'prd.txt')."
     )
+    # Get default output filename based on input filename
+    default_output = lambda x: os.path.splitext(x)[0] + "_domain_model.csl"
     parser.add_argument(
         "--output",
         type=str,
-        default="domain_model.csl",
-        help="Path to the output CSL file (default: 'domain_model.csl')."
+        help="Path to the output CSL file (default: input_filename_domain_model.csl)",
+        default=None
     )
     try:
         args = parser.parse_args()
+        # Set output filename if not explicitly provided
+        if args.output is None:
+            args.output = default_output(args.prd_file)
         print(f"DEBUG: Parsed arguments: prd_file={args.prd_file}, output={args.output}")
         logger.debug(f"Parsed arguments: prd_file={args.prd_file}, output={args.output}")
     except Exception as e:
