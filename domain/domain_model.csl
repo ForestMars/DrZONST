@@ -1,4 +1,14 @@
 BoundedContext BookshopInventory {
+  Entity Book {
+    - String id
+    - String a title
+    - String author
+    - Integer and quantity
+    constraint "shop"
+  }
   Service InventoryService {
+    Book createBook(String a title, String author, Integer and quantity)
+    Book[] listBooks()
+    void deleteBook(String id)
   }
 }
