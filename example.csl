@@ -1,0 +1,48 @@
+BoundedContext UserManagement {
+  Aggregate User {
+    Entity User {
+      aggregateRoot
+      - String id
+      - String username
+      - String email
+      - String firstName optional
+      - String lastName optional
+      - plainDate dateOfBirth optional
+      - utcDateTime createdAt
+      - utcDateTime updatedAt
+      constraint "id is not empty"
+      constraint "username is not empty"
+      constraint "email matches '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'"
+      operation createUser(String id, String username, String email, String firstName, String lastName, plainDate dateOfBirth, utcDateTime createdAt, utcDateTime updatedAt)
+      operation updateUser(String id, String username, String email, String firstName, String lastName, plainDate dateOfBirth, utcDateTime updatedAt)
+      operation deleteUser(String id)
+      operation getUser(String id)
+      emits UserCreated, UserUpdated, UserDeleted
+    }
+    Enum UserStatus {
+      ACTIVE, INACTIVE
+    }
+    DomainEvent UserCreated {
+      - String id
+      - String username
+      - String email
+    }
+    DomainEvent UserUpdated {
+      - String id
+      - String username
+      - String email
+    }
+    DomainEvent UserDeleted {
+      - String id
+    }
+  }
+  Application {
+    Service UserService {
+      User createUser(String id, String username, String email, String firstName, String lastName, plainDate dateOfBirth, utcDateTime createdAt, utcDateTime updatedAt)
+      User getUser(String id)
+      User updateUser(String id, String username, String email, String firstName, String lastName, plainDate dateOfBirth, utcDateTime updatedAt)
+      void deleteUser(String id)
+      User[] listUsers()
+    }
+  }
+}
