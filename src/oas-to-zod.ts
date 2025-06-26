@@ -1,3 +1,12 @@
+/**  
+ * @fileoverview Given an OAS file in JSON format, generates a coresponding Zod schema
+ * @description Takes input from a file (openapi.json) as a parameter; returns schemas as an object and writes output to a file (zodSchemas.ts)
+ * @version 0.0.1
+ * @license All rights reserved. 
+ * 
+ * @TODO Possible support for OAS files in XML format (?)
+ */ 
+
 // Importing necessary modules
 import { readFileSync, writeFileSync } from 'node:fs'; // Use node: prefix for clarity
 import * as path from 'node:path';
